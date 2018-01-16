@@ -4,6 +4,6 @@ As I've been going through my photos and reorganizing/categorizing them, I start
 
 Detecting for landscapes, sports, minimalism, etc off the bat was a bit complex, and I figured using a "wallpapers" folder and splitting it up into two simple folders for private and public would be useful and a great starting point to test the initial methods.
 
-Using the DeepAI documentation [here](https://deepai.org/api-docs/#introduction) and some additional JavaScript, if the value generated was greater than or equal to 0.5 move that image into a folder called "private" and if less than 0.5 move that into folder called "public". Create the folders `$ mkdir public && mkdir private && mkdir source` and then add the images to test into source. Running `$ node dai.js` will check the file and output the results to console.
+Using the DeepAI documentation [here](https://deepai.org/api-docs/#introduction) and some additional JavaScript, if the value generated was greater than or equal to 0.5 move that image into a folder called "private" and if less than 0.5 move that into folder called "public". Create the folders `$ mkdir public && mkdir private && mkdir source` and then add the images to test into source. Running `$ node dai.js` will check the file and output the results to console. It will loop through the source directory and run the function `AI`.
 
 The [DeepAI](https://deepai.org/) API has request limitations. Go the the official site for more details.
