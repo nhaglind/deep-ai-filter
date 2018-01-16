@@ -1,0 +1,16 @@
+{
+  "name": "deep-ai-filter",
+  "version": "1.0.0",
+  "description": "Separate Images based on confidence score using DeepAI.",
+  "main": "dai.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.83.0"
+  },
+  "devDependencies": {},
+  "keywords": []
+}
