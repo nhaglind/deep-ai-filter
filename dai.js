@@ -3,9 +3,9 @@ var request = require('request');
 var env = require('./env.js');
 var key = env.api_key;
 
-let threshold = 0.5; // Confidence 
-let source = './source/' // Source folder.
-let image = 'wallhaven-603706.jpg'; // Specific image to test.
+let threshold = 0.5; 
+let source = './source/' 
+let image = 'wallhaven-547016.jpg';
 let sketchy;
 
 request.post({
@@ -25,15 +25,15 @@ request.post({
 	(score > threshold) ? sketchy = true: sketchy = false; 
 	(sketchy) ? 
 		console.log(`This is a sketchy image. It has a score of ${score}.`) :
-		console.log(`This image is likely safe. It has a score of ${score}. Moving file to public folder.`);
+		console.log(`This image is likely safe. It has a score of ${score}.`);
 	(sketchy) ?
 		fs.copyFile(__dirname + `/${source + image}`, __dirname + `/private/${image}`, (err) => {
 			if (err) throw err;
-			console.log('Copying file to private.');
+			console.log(`Copying ${image} to private.`);
 		})
 			:
 		fs.copyFile(__dirname + `/${source + image}`, __dirname + `/public/${image}`, (err) => {
 			if (err) throw err;
-			console.log('Copying file to public.');
+			console.log(`Copying ${image} to public.`);
 		})
 });
