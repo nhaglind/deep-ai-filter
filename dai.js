@@ -7,16 +7,17 @@ let threshold = 0.5;
 let source = './source/' 
 
 var walkSync = function(dir, filelist) {
+  var path = path || require('path');
   var fs = fs || require('fs'),
       files = fs.readdirSync(dir);
   filelist = filelist || [];
   files.forEach(function(file) {
-    if (fs.statSync(dir + file).isDirectory()) {
-      filelist = walkSync(dir + file + '/', filelist);
-    }
-    else {
-      filelist.push(file);
-    }
+      if (fs.statSync(path.join(dir, file)).isDirectory()) {
+          filelist = walkSync(path.join(dir, file), filelist);
+      }
+      else {
+          filelist.push(path.join(dir, file));
+      }
   });
   return filelist;
 };
@@ -27,13 +28,14 @@ for (let i = 0; i < images.length; i++)  {
   AI(images[i]);
 }
 
-function AI(fileName) {
-  let image = fileName;
+function AI(filePath) {
+  let fullPath = filePath;
+  let fileName = fullPath.split(/[/ ]+/).pop();
   let sketchy;
   request.post({
     url: 'https://api.deepai.org/api/nsfw-detector',
     formData: {
-      image: fs.createReadStream(source + image),
+      image: fs.createReadStream(fullPath),
     },
     headers: {
       'Api-Key': key
@@ -49,14 +51,14 @@ function AI(fileName) {
       console.log(`This is a sketchy image. It has a score of ${score}.`) :
       console.log(`This image is likely safe. It has a score of ${score}.`);
     (sketchy) ?
-      fs.copyFile(__dirname + `/${source + image}`, __dirname + `/private/${image}`, (err) => {
+      fs.copyFile(__dirname + `/${fullPath}`, __dirname + `/private/${fileName}`, (err) => {
         if (err) throw err;
-        console.log(`Copying ${image} to private.`);
+        console.log(`Copying ${fileName} to private.`);
       })
         :
-      fs.copyFile(__dirname + `/${source + image}`, __dirname + `/public/${image}`, (err) => {
+      fs.copyFile(__dirname + `/${fullPath}`, __dirname + `/public/${fileName}`, (err) => {
         if (err) throw err;
-        console.log(`Copying ${image} to public.`);
+        console.log(`Copying ${fileName} to public.`);
       })
   });
 };
